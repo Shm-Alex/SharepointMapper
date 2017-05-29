@@ -80,6 +80,17 @@ namespace Shmapper
 
         }
 
+        private  string FirstLetterToLower(string str)
+        {
+            if (str == null)
+                return null;
+
+            if (str.Length > 1)
+                return char.ToLower(str[0]) + str.Substring(1);
+
+            return str.ToLower();
+        }
+
         private string PocoClassText(List list, Dictionary<Guid, string> listNameByGuid)
         {
             var sb = new StringBuilder();
@@ -152,13 +163,23 @@ public partial class {generatedClassName}:ISharepointItem
                     }
 
                 }
-               
+                string backingFieldCode = "";// по умолчанию не генерим , только для дат-тайме  чтоб  генерировать ToLocalTime()
+                string getAccesor = "get;";//код геттера
+                string setAccesor = "set;";//код сеттера
+                if (field.FieldTypeKind==FieldType.DateTime)
+                {
+                    string backingFieldName = $"_{FirstLetterToLower(field.EntityPropertyName)}";
+                    backingFieldCode = $"private {typeName }{nullableModifier} {backingFieldName};";
+                    setAccesor = $" set {{ {backingFieldName} = value; }}";
+                    getAccesor = $" get {{ return {backingFieldName}{nullableModifier}.ToLocalTime(); }}";
+                }
                 sb.Append($@"
+{backingFieldCode}
 /// <summary>
 ///({field.StaticName}){field.EntityPropertyName}:{field.TypeAsString} , {field.Description} 
 /// </summary>
                     [SharepointField(""{field.EntityPropertyName}"" {lookUp})]
-                        public {typeName }{nullableModifier} {field.EntityPropertyName}{{get;set;}} 
+                        public {typeName }{nullableModifier} {field.EntityPropertyName}{{ {getAccesor}{setAccesor}}} 
                     ");
             }
             sb.Append($@"
