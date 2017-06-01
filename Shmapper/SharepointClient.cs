@@ -122,7 +122,8 @@ public partial class {generatedClassName}:ISharepointItem
                 string lookUp =  "";
                 Type spTypeToCSharp = SpTypeToCSharp(field);
                 string typeName = spTypeToCSharp.Name;
-                string nullableModifier = spTypeToCSharp.IsValueType&& (!field.Required) ? "?" : "";
+               // string nullableModifier = spTypeToCSharp.IsValueType&& (!field.Required) ? "?" : "";
+                string nullableModifier = spTypeToCSharp.IsValueType&&(field.FieldTypeKind != FieldType.Boolean) && (!field.Required) ? "?" : "";
 
                 if (field is FieldLookup)
                 {
