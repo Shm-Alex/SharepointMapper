@@ -15,8 +15,9 @@ namespace SpTest
         [ClassInitialize]
         public static void Initialize(TestContext context)
         {
-            _sharepointClient = new SharepointClient("http://sp-dev2016-obl.mont.ru/sites/b2b", new NetworkCredential("SP_Portal", "Mont2010"));
-          //  _sharepointClient = new SharepointClient("http://sp-wfe-test01/sites/b2b", new NetworkCredential("SP_Portal", "Mont2010"));
+            _sharepointClient = new SharepointClient("http://sp-test2016.mont.ru/sites/b2b", new NetworkCredential("SP_Portal", "Mont2010"));
+           // _sharepointClient = new SharepointClient("http://sp-dev2016-obl.mont.ru/sites/b2b", new NetworkCredential("SP_Portal", "Mont2010"));
+           //  _sharepointClient = new SharepointClient("http://sp-wfe-test01/sites/b2b", new NetworkCredential("SP_Portal", "Mont2010"));
         }
 
         [TestMethod]
@@ -117,6 +118,10 @@ namespace SpTest
                 { "Тип контента локализация","ContentTypeLocalization"},
                 { "Докладчики","Speaker"},
                 { "Докладчики локализация","SpeakerLocalization"},
+                { "Доклад мероприятия","Lecture"},
+                { "Зал мероприятия","LectureHall"},
+                { "Блок доклада ","LectureBlock"},
+                { "ReportBlockList ","LectureBlock"},
 
             };
 

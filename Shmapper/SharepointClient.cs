@@ -59,6 +59,7 @@ namespace Shmapper
                 {FieldType.Computed,typeof(string)},
                 {FieldType.DateTime,typeof(DateTime)},
                 {FieldType.Boolean,typeof(bool)},
+               // {FieldType.Attachments,typeof(byte[])},
 
             };
             return decode.ContainsKey(field.FieldTypeKind) ? decode[field.FieldTypeKind] : typeof(string);
@@ -152,7 +153,7 @@ public partial class {generatedClassName}:ISharepointItem
                     if (Guid.TryParse(fieldLookup.LookupList, out listGuid) && listNameByGuid.ContainsKey(listGuid))
                     {
                         string lookUpValueStr = fieldLookup.AllowMultipleValues ? $@" public IEnumerable<{listNameByGuid[listGuid]}> {RefineFieldName(field.StaticName)}LookUp(ISpClient client) =>{RefineFieldName(field.StaticName)}Id.Select(l=> client.GetById<{listNameByGuid[listGuid]}>(l));" :
-                             $@"  public  {listNameByGuid[listGuid]} {RefineFieldName(field.StaticName)}LookUp(ISpClient client) =>client.GetById<{listNameByGuid[listGuid]}>({RefineFieldName(field.StaticName)}Id );"
+                             $@"  public  {listNameByGuid[listGuid]} {RefineFieldName(field.StaticName)}LookUp(ISpClient client) =>{RefineFieldName(field.StaticName)}!=null?client.GetById<{listNameByGuid[listGuid]}>({RefineFieldName(field.StaticName)}Id ):null;"
                             ;
                         sb.Append($@"
 /// <summary> 

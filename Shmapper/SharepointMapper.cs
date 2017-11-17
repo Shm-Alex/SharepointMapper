@@ -177,7 +177,16 @@ namespace Shmapper
                     else
                     {
                         Type TypeToConvert = GetUnderlyingType(objProperty);
-                        object settablePropertyValue = Convert.ChangeType(fieldValue, TypeToConvert);
+                        object settablePropertyValue = null;
+                        try
+                        {
+                            settablePropertyValue = Convert.ChangeType(fieldValue, TypeToConvert);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                           
+                        } 
                         objProperty.SetValue(obj, settablePropertyValue);
                     }
                 }
